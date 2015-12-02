@@ -11,7 +11,10 @@ import ceylon.html {
 }
 
 shared class InvariantTuple<Element, First, Rest = []>(
-    shared Tuple<Element, First, Rest> tuple) {}
+    shared Tuple<Element, First, Rest> tuple)
+        satisfies Iterable<Element> {
+    iterator = tuple.iterator;
+}
 
 shared InvariantTuple<Element, First, Rest> header<Element, First, Rest = []>(
     Tuple<Element, First, Rest> tuple)
@@ -37,9 +40,9 @@ shared void render<Element, First, Rest>(
         Body {
             H1("Medical Web App"),
             Table {
-                header = headers.tuple.map(asString).map(Th);
+                header = headers.map(asString).map(Th);
                 rows = cells.map((row) => Tr {
-                    row.tuple.map(asString).map(Td)
+                    row.map(asString).map(Td)
                 });
             }
         };
